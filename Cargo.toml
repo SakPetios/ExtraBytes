@@ -1,0 +1,8 @@
+
+[package]
+name = "send_with_raw_socket"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+libc = "0.2.155"
