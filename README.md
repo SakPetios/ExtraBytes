@@ -1,9 +1,9 @@
-# Sending packets via a raw socket in rust
+# Extra Bytes Added to Packet When Sending via Raw Socket (Rust + libc)
 
 ## Description
 
 I'm currently tring to send packets via a raw socket in rust. I'm currently using libc to manage the socket.
-I've had success with sending the packet but the packet sent is never the original one. Here's what's happening 
+I've had success with sending the packet but the packet sent is never the same as the original one. Here's what's happening,
 the packet I'm sending is this:
 ```rust 
 const EXAMPLE: [u8; 44] = [
@@ -12,13 +12,14 @@ const EXAMPLE: [u8; 44] = [
     0x02, 0x08, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xc0, 0xa8, 0x02, 0x01,
 ];
 ```
+This is essentially an arp request about 192.168.2.1
 
 The packet being sent is this (according to wireshark)
-
+```
 00 04 00 01 00 06 ff ff ff ff ff ff 00 00 11 00 // Notice the extra 0x0011 here?
 08 06 00 01 08 00 06 04 00 01 00 d8 61 57 60 36 
 c0 a8 02 08 ff ff ff ff ff ff c0 a8 02 01        
-
+```
 I know what is adding the exta bytes. 
 Here's what I'm doing:
 ```rust
